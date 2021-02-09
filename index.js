@@ -1,6 +1,6 @@
-var express = require('express');
 var mongoose = require('mongoose');
 var redis = require("redis");
+var session = require('express-session')
 
 var MongoStore = {
     client: null,
@@ -153,7 +153,7 @@ var SessionStore = function (options, cb) {
         expire: options.expire || 86400
     };
 
-    express.session.Store.call(this, options);
+    session.Store.call(this, options);
 
     switch (options.storage) {
         case 'mongodb':
@@ -196,6 +196,6 @@ var SessionStore = function (options, cb) {
     if (cb) cb.call(null);
 }
 
-SessionStore.prototype = new express.session.Store();
+SessionStore.prototype = new session.Store();
 
 module.exports = SessionStore;
